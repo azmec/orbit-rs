@@ -5,7 +5,7 @@ use serde::{Serialize, Deserialize};
 use handlebars::Handlebars;
 
 const REVIEW_START_TEMPLATE: &str = r#"<orbit-reviewarea>"#;
-const PROMPT_TEMPLATE: &str = r#"<orbit-prompt question="{{question}}" question-attachments="{{question-attachments}}" answer="{{answer}}"></orbit-prompt>"#;
+const PROMPT_TEMPLATE: &str = r#"<orbit-prompt question="{{question}}" answer="{{answer}}"></orbit-prompt>"#;
 const REVIEW_END: &str = "</orbit-reviewarea>";
 
 type Result<T> = result::Result<T, Box<dyn Error>>;
@@ -31,7 +31,6 @@ impl Orbit {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct OrbitCard {
     question: String,
-    question_attachments: String,
     answer: String,
 }
 
@@ -39,7 +38,6 @@ impl OrbitCard {
     pub fn to_html(&self) -> Result<String> {
         let card_map = &serde_json::json!({
             "question": self.question,
-            "question-attachments": self.question_attachments,
             "answer": self.answer
         });
 
